@@ -40,7 +40,7 @@ def train(model, optimizer, loss_fn, dataloader, metrics, params):
 
     # set model to training mode
     model.train()
-    model.double()
+    # model.double()
 
     # summary for current training loop and a running average object for loss
     summ = []
