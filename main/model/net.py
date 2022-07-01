@@ -46,9 +46,11 @@ class BasicBlock3D_1conv(nn.Module):
         self.relu = nn.ReLU(inplace=True)
     def forward(self, x):
         residual = x
+
         x = self.bn(x)
         x = self.relu(x)
         x = self.conv(x)
+        #print(x.size())
         return x + residual
 
 class ResNet3D(nn.Module):
@@ -71,19 +73,27 @@ class ResNet3D(nn.Module):
         return residual_unit
         
     def forward(self, x):
+        # print(x.size())
+        # exit(1)
         batch_size = x.size(0)
         
         x = x.view(batch_size, self.n_timesteps, self.params.n_flow, self.params.map_height, self.params.map_width)
         x = self.bnin(x)
         x = torch.relu(x)
+        # print("relu1", x.size())
 
         x = self.conv1(x)
+        # print("conv1",x.size())
 
         x = self.res(x)
+        # print("res", x.size())
 
         x = self.bn64(x)
         x = torch.relu(x)
+        # print("relu2", x.size())
         x = self.conv2(x)
+        # print("conv2", x.size())
+        # exit(1)
 
         out = x.view(batch_size, self.params.n_flow, self.params.map_height, self.params.map_width)
         return torch.relu(out)

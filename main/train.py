@@ -40,6 +40,7 @@ def train(model, optimizer, loss_fn, dataloader, metrics, params):
 
     # set model to training mode
     model.train()
+    model.double()
 
     # summary for current training loop and a running average object for loss
     summ = []
@@ -48,6 +49,10 @@ def train(model, optimizer, loss_fn, dataloader, metrics, params):
     # Use tqdm for progress bar
     with tqdm(total=len(dataloader), ascii=True) as t:
         for i, (train_batch, labels_batch) in enumerate(dataloader):
+            # print(i)
+            # print(train_batch.size())
+            # print(labels_batch.size())
+            # exit(1)
             
             # move to GPU if available
             if params.cuda:
@@ -113,11 +118,13 @@ def train_and_evaluate(model, optimizer, scheduler, loss_fn, metrics, params, mo
     best_val_loss = 1e10
     best_test_loss = 1e10
 
+    logging.info("Generate the train and test datasets...")
+    # fetch dataloaders for every epoch
+    dataloaders = data_loader.fetch_dataloader(['train', 'val', 'test'], args.data_dir, params)
+    logging.info("- done.")
+
     for epoch in range(params.num_epochs):
-        logging.info("Generate the train and test datasets...")
-        # fetch dataloaders for every epoch
-        dataloaders = data_loader.fetch_dataloader(['train', 'val', 'test'], args.data_dir, params)
-        logging.info("- done.")
+
 
         # Run one epoch
         logging.info("Epoch {}/{}".format(epoch + 1, params.num_epochs))
