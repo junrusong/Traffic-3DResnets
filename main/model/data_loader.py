@@ -31,8 +31,8 @@ class BikeTrianDataset(Dataset):
         self.depends = get_depends(params)
         f = h5py.File(data_file, 'r')
         test_pos = params.test_timesteps + self.depends.max()
-        tmp = f['data']
-        tmp2 = tmp[()]
+        # tmp = f['data']
+        # tmp2 = tmp[()]
 
         self.data = f['data'][()][:-test_pos]
         self.timestamps = f['date'][()][:-test_pos]
@@ -42,8 +42,8 @@ class BikeTrianDataset(Dataset):
 
     def __getitem__(self, index):
         y_pos = self.depends.max()+index
-        x = self.data[y_pos-self.depends]
         y = self.data[y_pos]
+        x = self.data[y_pos-self.depends]
         return x, y
 
 class BikeTestDataset(Dataset):
