@@ -118,13 +118,13 @@ def train_and_evaluate(model, optimizer, scheduler, loss_fn, metrics, params, mo
     best_val_loss = 1e10
     best_test_loss = 1e10
 
-
+    logging.info("Generate the train and test datasets...")
+    # fetch dataloaders for every epoch
+    dataloaders = data_loader.fetch_dataloader(['train', 'val', 'test'], args.data_dir, params)
+    logging.info("- done.")
 
     for epoch in range(params.num_epochs):
-        logging.info("Generate the train and test datasets...")
-        # fetch dataloaders for every epoch
-        dataloaders = data_loader.fetch_dataloader(['train', 'val', 'test'], args.data_dir, params)
-        logging.info("- done.")
+
 
 
         # Run one epoch
