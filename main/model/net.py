@@ -64,6 +64,7 @@ class TTP(nn.Module):
         self.conv2 = nn.Conv3d(64, 1, kernel_size=(3, 3, 3), stride=1, padding=1, dilation=1)
         self.bn64 = nn.BatchNorm3d(64)
         self.bnin = nn.BatchNorm3d(11)
+        self.trans1 = nn.TransformerEncoderLayer(d_model=256, nhead=8)
 
     def get_residual_unit(self, n):
         block = BasicBlock3D_1conv
@@ -77,6 +78,11 @@ class TTP(nn.Module):
         # print(x.size())
         # exit(1)
         batch_size = x.size(0)
+
+        x = x.view(batch_size, self.n_timesteps, self.params.n_flow*self.params.map_height*self.params.map_width)
+        x = torch.swapaxes(x, 0, 1)
+        x = self.trans1(x)
+        x = torch.swapaxes(x, 0, 1)
 
         x = x.view(batch_size, self.n_timesteps, self.params.n_flow, self.params.map_height, self.params.map_width)
         x = self.bnin(x)
