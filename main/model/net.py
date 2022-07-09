@@ -53,6 +53,53 @@ class BasicBlock3D_1conv(nn.Module):
         #print(x.size())
         return x + residual
 
+
+class TTP(nn.Module):
+    def __init__(self, params, n_res_unit=8):
+        super(TTP, self).__init__()
+        self.params = params
+        self.n_timesteps = params.len_close + params.len_period + params.len_trend
+        self.conv1 = nn.Conv3d(11, 64, kernel_size=(3, 3, 3), stride=1, padding=1, dilation=1)
+        self.res = self.get_residual_unit(n_res_unit)
+        self.conv2 = nn.Conv3d(64, 1, kernel_size=(3, 3, 3), stride=1, padding=1, dilation=1)
+        self.bn64 = nn.BatchNorm3d(64)
+        self.bnin = nn.BatchNorm3d(11)
+
+    def get_residual_unit(self, n):
+        block = BasicBlock3D_1conv
+        layers = []
+        for _ in range(n):
+            layers.append(block())
+        residual_unit = nn.Sequential(*layers)
+        return residual_unit
+
+    def forward(self, x):
+        # print(x.size())
+        # exit(1)
+        batch_size = x.size(0)
+
+        x = x.view(batch_size, self.n_timesteps, self.params.n_flow, self.params.map_height, self.params.map_width)
+        x = self.bnin(x)
+        x = torch.relu(x)
+        # print("relu1", x.size())
+
+        x = self.conv1(x)
+        # print("conv1",x.size())
+
+        x = self.res(x)
+        # print("res", x.size())
+
+        x = self.bn64(x)
+        x = torch.relu(x)
+        # print("relu2", x.size())
+        x = self.conv2(x)
+        # print("conv2", x.size())
+        # exit(1)
+
+        out = x.view(batch_size, self.params.n_flow, self.params.map_height, self.params.map_width)
+        return torch.relu(out)
+
+
 class ResNet3D(nn.Module):
     def __init__(self, params, n_res_unit=8):
         super(ResNet3D, self).__init__()
@@ -73,27 +120,27 @@ class ResNet3D(nn.Module):
         return residual_unit
         
     def forward(self, x):
-        # print(x.size())
+        print(x.size())
         # exit(1)
         batch_size = x.size(0)
         
         x = x.view(batch_size, self.n_timesteps, self.params.n_flow, self.params.map_height, self.params.map_width)
         x = self.bnin(x)
         x = torch.relu(x)
-        # print("relu1", x.size())
+        print("relu1", x.size())
 
         x = self.conv1(x)
-        # print("conv1",x.size())
+        print("conv1",x.size())
 
         x = self.res(x)
-        # print("res", x.size())
+        print("res", x.size())
 
         x = self.bn64(x)
         x = torch.relu(x)
-        # print("relu2", x.size())
+        print("relu2", x.size())
         x = self.conv2(x)
-        # print("conv2", x.size())
-        # exit(1)
+        print("conv2", x.size())
+        exit(1)
 
         out = x.view(batch_size, self.params.n_flow, self.params.map_height, self.params.map_width)
         return torch.relu(out)
