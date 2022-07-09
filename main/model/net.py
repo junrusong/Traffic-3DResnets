@@ -63,7 +63,7 @@ class TTP(nn.Module):
         self.res = self.get_residual_unit(n_res_unit)
         self.conv2 = nn.Conv3d(64, 1, kernel_size=(3, 3, 3), stride=1, padding=1, dilation=1)
         self.bn64 = nn.BatchNorm3d(64)
-        self.bnin = nn.BatchNorm3d(11)
+        self.bnin = nn.BatchNorm3d(self.n_timesteps)
         self.trans1 = nn.TransformerEncoderLayer(d_model=256, nhead=8)
 
     def get_residual_unit(self, n):
@@ -111,11 +111,11 @@ class ResNet3D(nn.Module):
         super(ResNet3D, self).__init__()
         self.params = params
         self.n_timesteps = params.len_close + params.len_period + params.len_trend
-        self.conv1 = nn.Conv3d(11, 64, kernel_size=(3,3,3), stride=1, padding=1, dilation=1)
+        self.conv1 = nn.Conv3d(self.n_timesteps, 64, kernel_size=(3,3,3), stride=1, padding=1, dilation=1)
         self.res = self.get_residual_unit(n_res_unit)
         self.conv2 = nn.Conv3d(64, 1, kernel_size=(3,3,3), stride=1, padding=1, dilation=1)
         self.bn64 = nn.BatchNorm3d(64)
-        self.bnin = nn.BatchNorm3d(11)
+        self.bnin = nn.BatchNorm3d(self.n_timesteps)
 
     def get_residual_unit(self, n):
         block = BasicBlock3D_1conv
