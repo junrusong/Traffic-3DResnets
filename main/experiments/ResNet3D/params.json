@@ -5,7 +5,7 @@
     "save_summary_steps": 10,
     "len_close": 10,
     "len_period": 10,
-    "len_trend": 10,
+    "len_trend": 4,
     "n_flow": 2,
     "map_height": 16,
     "map_width": 8,
