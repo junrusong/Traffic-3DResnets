@@ -66,6 +66,12 @@ class TTP(nn.Module):
         self.bnin = nn.BatchNorm3d(self.n_timesteps)
         self.trans1 = nn.TransformerEncoderLayer(d_model=256, nhead=8, batch_first=True)
         self.trans2 = nn.TransformerEncoderLayer(d_model=256, nhead=8, batch_first=True)
+        self.trans3 = nn.TransformerEncoderLayer(d_model=256, nhead=8, batch_first=True)
+        self.trans4 = nn.TransformerEncoderLayer(d_model=256, nhead=8, batch_first=True)
+        self.trans5 = nn.TransformerEncoderLayer(d_model=256, nhead=8, batch_first=True)
+        self.trans6 = nn.TransformerEncoderLayer(d_model=256, nhead=8, batch_first=True)
+        self.trans7 = nn.TransformerEncoderLayer(d_model=256, nhead=8, batch_first=True)
+        self.trans8 = nn.TransformerEncoderLayer(d_model=256, nhead=8, batch_first=True)
 
     def get_residual_unit(self, n):
         block = BasicBlock3D_1conv
@@ -81,9 +87,15 @@ class TTP(nn.Module):
         batch_size = x.size(0)
 
         x = x.view(batch_size, self.n_timesteps, self.params.n_flow * self.params.map_height * self.params.map_width)
-        x_trans1 = self.trans1(x)
-        x_trans2 = self.trans2(x)
-        x = x_trans2
+        x = self.trans1(x)
+        x = self.trans2(x)
+        x = self.trans3(x)
+        x = self.trans4(x)
+        x = self.trans5(x)
+        x = self.trans6(x)
+        x = self.trans7(x)
+        x = self.trans8(x)
+
 
 
 
