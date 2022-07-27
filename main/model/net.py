@@ -99,8 +99,6 @@ class TTP(nn.Module):
         x = self.conv1(x)
         # print("conv1",x.size())
 
-        x = x.view(batch_size, self.n_timesteps, self.params.n_flow * self.params.map_height * self.params.map_width)
-        x = self.trans1(x)
 
         x = self.res(x)
         # print("res", x.size())
