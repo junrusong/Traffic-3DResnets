@@ -88,7 +88,7 @@ class TTP(nn.Module):
 
         x = x.view(batch_size, self.n_timesteps, self.params.n_flow * self.params.map_height * self.params.map_width)
         x_trans1 = self.trans1(x)
-        x = x + x_trans1
+        x = x_trans1
         # x = self.trans2(x)
         # x = self.trans3(x)
         # x = self.trans4(x)
