@@ -79,10 +79,10 @@ class TTP(nn.Module):
         # exit(1)
         batch_size = x.size(0)
 
-        x = x.view(batch_size, self.n_timesteps, self.params.n_flow*self.params.map_height*self.params.map_width)
-        x = torch.swapaxes(x, 0, 1)
-        x = self.trans1(x)
-        x = torch.swapaxes(x, 0, 1)
+        # x = x.view(batch_size, self.n_timesteps, self.params.n_flow*self.params.map_height*self.params.map_width)
+        # x = torch.swapaxes(x, 0, 1)
+        # x = self.trans1(x)
+        # x = torch.swapaxes(x, 0, 1)
 
         x = x.view(batch_size, self.n_timesteps, self.params.n_flow, self.params.map_height, self.params.map_width)
         x = self.bnin(x)
