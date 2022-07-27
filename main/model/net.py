@@ -79,15 +79,9 @@ class TTP(nn.Module):
         # exit(1)
         batch_size = x.size(0)
 
-        x = x.view(batch_size, self.n_timesteps, self.params.n_flow*self.params.map_height*self.params.map_width)
-        # print(x.size())
-        # x = torch.swapaxes(x, 0, 1)
-        # print(x.size())
-        x = self.trans1(x)
-        # print(x.size())
-        # x = torch.swapaxes(x, 0, 1)
-        # print(x.size())
-        # exit(1)
+
+
+
 
         x = x.view(batch_size, self.n_timesteps, self.params.n_flow, self.params.map_height, self.params.map_width)
         x = self.bnin(x)
@@ -95,7 +89,11 @@ class TTP(nn.Module):
         # print("relu1", x.size())
 
         x = self.conv1(x)
-        # print("conv1",x.size())
+        print("conv1",x.size())
+        exit(1)
+
+        x = x.view(batch_size, self.n_timesteps, self.params.n_flow * self.params.map_height * self.params.map_width)
+        x = self.trans1(x)
 
         x = self.res(x)
         # print("res", x.size())
