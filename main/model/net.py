@@ -65,6 +65,7 @@ class TTP(nn.Module):
         self.bn64 = nn.BatchNorm3d(64)
         self.bnin = nn.BatchNorm3d(self.n_timesteps)
         self.trans1 = nn.TransformerEncoderLayer(d_model=256, nhead=8, batch_first=True)
+        self.trans2 = nn.TransformerEncoderLayer(d_model=256, nhead=8, batch_first=True)
 
     def get_residual_unit(self, n):
         block = BasicBlock3D_1conv
@@ -78,6 +79,13 @@ class TTP(nn.Module):
         # print(x.size())
         # exit(1)
         batch_size = x.size(0)
+
+        x = x.view(batch_size, self.n_timesteps, self.params.n_flow * self.params.map_height * self.params.map_width)
+        x_trans1 = self.trans1(x)
+        x_trans2 = self.trans2(x)
+        x = x_trans2
+
+
 
 
 
