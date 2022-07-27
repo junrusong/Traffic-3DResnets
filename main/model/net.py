@@ -86,7 +86,7 @@ class TTP(nn.Module):
         x = x.view(batch_size, self.n_timesteps, self.params.n_flow, self.params.map_height, self.params.map_width)
         x = self.bnin(x)
         x = torch.relu(x)
-        # print("relu1", x.size())
+        print("relu1", x.size())
 
         x = self.conv1(x)
         print("conv1",x.size())
