@@ -96,12 +96,9 @@ class TTP(nn.Module):
         # x = self.trans6(x)
         # x = self.trans7(x)
         # x = self.trans8(x)
-
-
-
-
-
-
+        x = torch.cat((x, x_trans1),2)
+        print(x.size())
+        exit(1)
 
 
         x = x.view(batch_size, self.n_timesteps, self.params.n_flow, self.params.map_height, self.params.map_width)
