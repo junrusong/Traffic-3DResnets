@@ -105,22 +105,26 @@ class TTP(nn.Module):
         x = x.view(batch_size, self.n_timesteps, self.params.n_flow*2, self.params.map_height, self.params.map_width)
         x = self.bnin(x)
         x = torch.relu(x)
-        print("relu1", x.size())
+        # print("relu1", x.size())
 
         x = self.conv1(x)
-        print("conv1",x.size())
+        # print("conv1",x.size())
         # exit(1)
 
 
         x = self.res(x)
-        print("res", x.size())
+        # print("res", x.size())
 
         x = self.bn64(x)
         x = torch.relu(x)
-        print("relu2", x.size())
+        # print("relu2", x.size())
         x = self.conv2(x)
-        print("conv2", x.size())
-        exit(1)
+        # print("conv2", x.size())
+        # exit(1)
+
+        x = x.view(batch_size, 2, self.params.n_flow, self.params.map_height, self.params.map_width)
+        x = torch.mean(x,1)
+        x = torch.squeeze(x)
 
         out = x.view(batch_size, self.params.n_flow, self.params.map_height, self.params.map_width)
         return torch.relu(out)
