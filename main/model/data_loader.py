@@ -19,7 +19,7 @@ def get_depends(params):
     TrendInterval = 7
     PeriodInterval = 1
     offset_frame = pd.DateOffset(minutes=24 * 60 // T)
-    depends = list(range(1, params.len_close+1)) + [params.len_try + PeriodInterval * T * j for j in range(1, params.len_period+1)] + [TrendInterval * T * j for j in range(1, params.len_trend+1)]
+    depends = list(range(1, params.len_close+1)) + [PeriodInterval * T * j for j in range(1, params.len_period+1)] + [TrendInterval * T * j for j in range(1, params.len_trend+1)]
     depends = depends +[25,26,27]
     # depends.append(25, 26, 27,49,50,51)
     # depends.append(25, 26, 27,49,50,51,73,74,75)
