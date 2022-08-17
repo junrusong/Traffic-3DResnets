@@ -122,9 +122,9 @@ class TTP(nn.Module):
         # print("conv2", x.size())
         # exit(1)
 
-        x = x.view(batch_size, 2, self.params.n_flow, self.params.map_height, self.params.map_width)
-        x = torch.mean(x,1)
-        x = torch.squeeze(x)
+        # x = x.view(batch_size, 2, self.params.n_flow, self.params.map_height, self.params.map_width)
+        # x = torch.mean(x,1)
+        # x = torch.squeeze(x)
 
         out = x.view(batch_size, self.params.n_flow, self.params.map_height, self.params.map_width)
         return torch.relu(out)
