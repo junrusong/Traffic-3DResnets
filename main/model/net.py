@@ -105,7 +105,7 @@ class TTP(nn.Module):
         x = torch.relu(x)
         # print("relu1", x.size())
 
-        x = self.dropout(x)
+        # x = self.dropout(x)
 
         x = self.conv1(x)
         # print("conv1",x.size())
