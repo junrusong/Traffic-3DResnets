@@ -100,7 +100,7 @@ class TTP(nn.Module):
         # x = self.trans8(x)
 
         x = torch.cat((x, x_trans1),2)
-        x = self.dropout(x)
+        # x = self.dropout(x)
         # print(x.size())
         # exit(1)
 
@@ -109,6 +109,8 @@ class TTP(nn.Module):
         x = self.bnin(x)
         x = torch.relu(x)
         # print("relu1", x.size())
+
+        x = self.dropout(x)
 
         x = self.conv1(x)
         # print("conv1",x.size())
