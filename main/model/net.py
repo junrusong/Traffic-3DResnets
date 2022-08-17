@@ -58,8 +58,8 @@ class TTP(nn.Module):
     def __init__(self, params, n_res_unit=8):
         super(TTP, self).__init__()
         self.params = params
-        # self.n_timesteps = params.len_close + params.len_period + params.len_trend+12
-        self.n_timesteps = 672
+        self.n_timesteps = params.len_close + params.len_period + params.len_trend
+        # self.n_timesteps = 672
         self.dropout = nn.Dropout(0.5)
         self.conv1 = nn.Conv3d(self.n_timesteps, 64, kernel_size=(3, 3, 3), stride=1, padding=1, dilation=1)
         self.res = self.get_residual_unit(n_res_unit)
