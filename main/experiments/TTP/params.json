@@ -1,6 +1,6 @@
 {
     "learning_rate": 1e-3,
-    "batch_size": 128,
+    "batch_size": 1024,
     "num_epochs": 200,
     "save_summary_steps": 10,
     "len_close": 3,
