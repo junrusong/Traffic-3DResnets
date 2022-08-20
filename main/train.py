@@ -165,6 +165,7 @@ def train_and_evaluate(model, optimizer, scheduler, loss_fn, metrics, params, mo
             best_json_path = os.path.join(model_dir, "metrics_test_best_weights.json")
             utils.save_dict_to_json(test_metrics, best_json_path)
 
+
 def run(args=None):
     # Load the parameters from json file
     args.model_dir = args.md + '/' + args.model
@@ -198,8 +199,10 @@ def run(args=None):
 
     # Train the model
     logging.info("Starting training for {} epoch(s)".format(params.num_epochs))
-    train_and_evaluate(model, optimizer, scheduler, loss_fn, metrics, params, args.model_dir,
-                       args.restore_file)
+
+    tmp_best_result = train_and_evaluate(model, optimizer, scheduler, loss_fn, metrics, params, args.model_dir,
+                           args.restore_file)
+
 
 if __name__ == '__main__':
     args = parser.parse_args()
