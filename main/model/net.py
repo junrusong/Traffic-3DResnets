@@ -105,8 +105,6 @@ class TTP(nn.Module):
         x = torch.relu(x)
         # print("relu1", x.size())
 
-        x = self.dropout(x)
-
         x = self.conv1(x)
         # print("conv1",x.size())
         # exit(1)
@@ -118,6 +116,7 @@ class TTP(nn.Module):
         x = self.bn64(x)
         x = torch.relu(x)
         # print("relu2", x.size())
+        x = self.dropout(x)
         x = self.conv2(x)
         # print("conv2", x.size())
         # exit(1)

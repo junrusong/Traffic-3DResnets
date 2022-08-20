@@ -27,9 +27,24 @@
 #
 # print(karatsuba(3141592653589793238462643383279502884197169399375105820974944592,2718281828459045235360287471352662497757247093699959574966967627))
 
-s=range(4)
-for i in s:
-    print(i)
-print(s.sort())
-ls=range(4)
-print(ls)
+# s=range(4)
+# for i in s:
+#     print(i)
+# print(s.sort())
+# ls=range(4)
+# print(ls)
+
+# s="ae"
+# t="aea"
+# s_sort = sorted(s)
+# t_sort = sorted(t)
+# # if len(s_sort) == 0:
+# #     return t_sort[0]
+# for i in range(len(s_sort)):
+#     if t_sort[i] != s_sort[i]:
+#         return t_sort[i]
+#     else:
+#         return t_sort[-1]
+
+set=(1,2,4,7,9)
+print(set[-3])
