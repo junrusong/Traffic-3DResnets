@@ -112,10 +112,11 @@ class TTP(nn.Module):
         selected_indices = indices[:, :k]
         if self.next:
             selected_indices = selected_indices + 1
-            print(selected_indices.device)
+            # print(selected_indices.device)
 
         mask = torch.zeros(batch_size, repeat_time)
-        print(mask.device)
+        # print(mask.device)
+        mask.cuda()
         mask.scatter_(1, selected_indices, 1.)
         mask = mask.unsqueeze(2).repeat(1, 1, self.params.n_flow * self.params.map_height * self.params.map_width)
         mask = torch.ge(mask, 0.5)
