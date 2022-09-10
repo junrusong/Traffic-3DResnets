@@ -46,5 +46,10 @@
 #     else:
 #         return t_sort[-1]
 
-set=(1,2,4,7,9)
-print(set[-3])
+# set=(1,2,4,7,9)
+# print(set[-3])
+
+A = {'a':3,'b':2,'c':5}
+print(sorted(A.items(),key=lambda x:x[1]))
+
+
